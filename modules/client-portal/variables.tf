@@ -52,6 +52,23 @@ variable "max_size" {
   default     = 1
 }
 
+variable "eb_application_name" {
+  description = "Elastic Beanstalk application, shared by all environments."
+  type        = string
+  default     = "paf-clientportal-reactapp"
+}
+
+variable "create_eb_application" {
+  description = "Create the Elastic Beanstalk application. True in the first environment built (UAT), false in the others."
+  type        = bool
+  default     = true
+}
+
+variable "eb_environment_name" {
+  description = "Elastic Beanstalk environment name, following the other portals (for example paf-clientportal-reactapp-uat, and -env for Production)."
+  type        = string
+}
+
 variable "service_role" {
   description = "Existing Elastic Beanstalk service role (holds AWS-managed policies only)."
   type        = string

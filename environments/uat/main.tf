@@ -14,4 +14,8 @@ module "client_portal" {
 
   # Must not clash with an existing rule on the listener (check with aws elbv2 describe-rules).
   listener_rule_priority = 100
+
+  # UAT creates the shared Elastic Beanstalk application (Production will not).
+  eb_environment_name   = "paf-clientportal-reactapp-uat"
+  create_eb_application = true
 }

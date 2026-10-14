@@ -1,23 +1,25 @@
-locals {
-  eb_name = "paf-clientportal-reactapp-${lower(var.environment)}"
-}
-
 # Newest Docker platform on Amazon Linux 2023 at the time the environment is created.
 data "aws_elastic_beanstalk_solution_stack" "docker" {
   most_recent = true
   name_regex  = var.platform_name_regex
 }
 
-# One application per environment, so UAT and Production can be built from separate Terraform states.
+# One application shared by every environment, as with the other portals, so a build can be
+# deployed to UAT and then to Production unchanged. UAT creates it (create_eb_application = true);
+# Production sets it to false and refers to the same application by name.
 resource "aws_elastic_beanstalk_application" "this" {
-  name        = local.eb_name
-  description = "Client portal (${var.environment})"
+  count = var.create_eb_application ? 1 : 0
+
+  name        = var.eb_application_name
+  description = "Client portal"
 }
 
 resource "aws_elastic_beanstalk_environment" "this" {
-  name                = local.eb_name
-  application         = aws_elastic_beanstalk_application.this.name
+  name                = var.eb_environment_name
+  application         = var.eb_application_name
   solution_stack_name = data.aws_elastic_beanstalk_solution_stack.docker.name
+
+  depends_on = [aws_elastic_beanstalk_application.this]
 
   # Network: private subnets, no public IP.
   setting {

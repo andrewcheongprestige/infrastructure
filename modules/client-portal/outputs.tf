@@ -25,7 +25,7 @@ output "ssm_parameter_path" {
 
 output "eb_application_name" {
   description = "Use as APP_NAME in the portal's buildspec."
-  value       = aws_elastic_beanstalk_application.this.name
+  value       = var.eb_application_name
 }
 
 output "eb_environment_name" {
