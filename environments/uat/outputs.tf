@@ -10,3 +10,11 @@ output "certificate_arn" {
 output "ssm_parameter_path" {
   value = module.client_portal.ssm_parameter_path
 }
+
+output "eb_application_name" {
+  value = module.client_portal.eb_application_name
+}
+
+output "eb_environment_name" {
+  value = module.client_portal.eb_environment_name
+}

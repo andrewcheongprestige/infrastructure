@@ -22,3 +22,13 @@ output "certificate_arn" {
 output "ssm_parameter_path" {
   value = local.ssm_parameter_path
 }
+
+output "eb_application_name" {
+  description = "Use as APP_NAME in the portal's buildspec."
+  value       = aws_elastic_beanstalk_application.this.name
+}
+
+output "eb_environment_name" {
+  description = "The environment the pipeline deploys to."
+  value       = aws_elastic_beanstalk_environment.this.name
+}
