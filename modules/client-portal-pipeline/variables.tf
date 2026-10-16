@@ -28,37 +28,9 @@ variable "eb_environment_name" {
   type        = string
 }
 
-variable "enforce_tls_only" {
-  description = "Refuse any request to the artifact bucket that is not over HTTPS. Normally true. It is switched off in UAT only while diagnosing a deployment failure."
-  type        = bool
-  default     = true
-}
-
-variable "temporary_broad_deploy_policy" {
-  description = "TEMPORARY: also give the pipeline role the same broad permissions as the recruitment portal's pipeline, to find out which one the narrow policy is missing. Never leave this on."
-  type        = bool
-  default     = false
-}
-
 variable "eb_environment_id" {
   description = "Elastic Beanstalk's ID for the environment (e-...). Its CloudFormation stack is awseb-<id>-stack."
   type        = string
-}
-
-variable "eb_instance_role_name" {
-  description = "IAM role the environment's instances run as. The pipeline may pass it on when deploying."
-  type        = string
-}
-
-variable "eb_instance_profile_name" {
-  description = "Instance profile the environment uses. The pipeline may look it up when deploying."
-  type        = string
-}
-
-variable "eb_service_role_name" {
-  description = "Elastic Beanstalk service role used by the environment."
-  type        = string
-  default     = "aws-elasticbeanstalk-service-role"
 }
 
 variable "build_image" {
