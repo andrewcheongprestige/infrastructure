@@ -44,6 +44,8 @@ resource "aws_s3_bucket_lifecycle_configuration" "artifacts" {
 
 # Refuse any access that is not over TLS.
 resource "aws_s3_bucket_policy" "artifacts" {
+  count = var.enforce_tls_only ? 1 : 0
+
   bucket = aws_s3_bucket.artifacts.id
 
   policy = jsonencode({

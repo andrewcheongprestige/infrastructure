@@ -15,6 +15,10 @@ output "instance_profile_name" {
   value = aws_iam_instance_profile.instance.name
 }
 
+output "instance_role_name" {
+  value = aws_iam_role.instance.name
+}
+
 output "certificate_arn" {
   value = aws_acm_certificate.this.arn
 }
@@ -31,4 +35,9 @@ output "eb_application_name" {
 output "eb_environment_name" {
   description = "The environment the pipeline deploys to."
   value       = aws_elastic_beanstalk_environment.this.name
+}
+
+output "eb_environment_id" {
+  description = "Elastic Beanstalk's own ID for the environment (e-...). Its CloudFormation stack is named after it."
+  value       = aws_elastic_beanstalk_environment.this.id
 }
