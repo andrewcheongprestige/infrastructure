@@ -6,7 +6,7 @@ locals {
   name_prefix = "client-portal-${lower(var.environment)}"
 
   # Parameters are created by hand (the values are secret) under this path.
-  ssm_parameter_path = "/ClientPortal/${var.environment}"
+  ssm_parameter_path = "/${var.environment}/ClientPortal"
 }
 
 # Dedicated instance role. The portal does not share the default aws-elasticbeanstalk-ec2-role.

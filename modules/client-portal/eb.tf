@@ -19,7 +19,12 @@ resource "aws_elastic_beanstalk_environment" "this" {
   application         = var.eb_application_name
   solution_stack_name = data.aws_elastic_beanstalk_solution_stack.docker.name
 
-  depends_on = [aws_elastic_beanstalk_application.this]
+  # The instance role must be allowed to read the portal's SSM parameters before the environment tries to
+  # resolve them, or the update fails with an access error.
+  depends_on = [
+    aws_elastic_beanstalk_application.this,
+    aws_iam_role_policy.read_parameters,
+  ]
 
   # Network: private subnets, no public IP.
   setting {

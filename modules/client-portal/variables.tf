@@ -97,6 +97,12 @@ variable "environment_properties" {
   description = "Plain environment variables for the app. NON-SECRET values only, as they are stored in the Terraform state."
   type        = map(string)
   default     = {}
+
+  # Stops a placeholder from being deployed by accident.
+  validation {
+    condition     = alltrue([for v in values(var.environment_properties) : !strcontains(v, "REPLACE-ME")])
+    error_message = "An environment property still contains the placeholder REPLACE-ME. Put the real value in environments/<env>/main.tf."
+  }
 }
 
 variable "environment_secrets" {

@@ -18,4 +18,20 @@ module "client_portal" {
   # UAT creates the shared Elastic Beanstalk application (Production will not).
   eb_environment_name   = "paf-clientportal-reactapp-uat"
   create_eb_application = true
+
+  # Plain configuration. Not secret, so it lives here where changes are reviewed in git.
+  # Each backend address must end with a slash (the portal's API client depends on it).
+  environment_properties = {
+    PORTAL_ORIGIN            = "https://uat.client.prestigeinhomecare.com.au"
+    AUTH_API_BASE_URI        = "https://uat.thehub.prestigeinhomecare.com.au/auth/"
+    INTEGRATION_API_BASE_URI = "https://uat.thehub.prestigeinhomecare.com.au/integration/"
+    PAYMENTS_API_BASE_URI    = "https://uat.thehub.prestigeinhomecare.com.au/payments/"
+  }
+
+  # Secrets: Elastic Beanstalk reads these from SSM when the instance starts, so the values never appear
+  # in the console, the bundle, the build log or the Terraform state. Create each one by hand first:
+  # aws ssm put-parameter --type SecureString ... (see the SESSION_SECRET command in the runbook).
+  environment_secrets = {
+    SESSION_SECRET = "arn:aws:ssm:ap-southeast-2:421089614203:parameter/UAT/ClientPortal/SESSION_SECRET"
+  }
 }
