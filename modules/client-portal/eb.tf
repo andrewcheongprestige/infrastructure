@@ -12,6 +12,15 @@ resource "aws_elastic_beanstalk_application" "this" {
 
   name        = var.eb_application_name
   description = "Client portal"
+
+  # Every pipeline run (failed ones included) registers an application version. Keep the newest 25 and let
+  # Elastic Beanstalk delete the older ones. A version that is currently deployed is never deleted. The bundle
+  # files are left in S3 (they are small, and the deploy already removes its own temporary copies).
+  appversion_lifecycle {
+    service_role          = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${var.service_role}"
+    max_count             = 25
+    delete_source_from_s3 = false
+  }
 }
 
 resource "aws_elastic_beanstalk_environment" "this" {
