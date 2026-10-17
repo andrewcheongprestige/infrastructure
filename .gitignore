@@ -8,7 +8,26 @@ override.tf
 override.tf.json
 
 # Never commit variable files that may hold secrets
+*.tfvars
+*.tfvars.json
 *.auto.tfvars
 secrets.tfvars
+
+# Terraform's import generator (terraform plan -generate-config-out=generated.tf) writes everything it reads,
+# which for Elastic Beanstalk environments includes plain-text secrets. Review it, move what is wanted into
+# named files, then delete it. It must never be committed.
+generated.tf
+
+# Crash logs and CLI configuration (may contain request details or registry credentials)
+crash.log
+crash.*.log
+terraform.rc
+.terraformrc
+
+# Editors and operating system
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store
 
 # .terraform.lock.hcl IS committed on purpose (pins provider versions)
