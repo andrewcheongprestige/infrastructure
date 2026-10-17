@@ -33,6 +33,23 @@ variable "eb_environment_id" {
   type        = string
 }
 
+variable "execution_mode" {
+  description = "How overlapping runs are handled. QUEUED runs every push in order. SUPERSEDED lets a newer push replace a waiting run."
+  type        = string
+  default     = "SUPERSEDED"
+
+  validation {
+    condition     = contains(["SUPERSEDED", "QUEUED", "PARALLEL"], var.execution_mode)
+    error_message = "execution_mode must be SUPERSEDED, QUEUED or PARALLEL."
+  }
+}
+
+variable "retry_source_on_failure" {
+  description = "Retry the Source stage (all of its actions) if fetching from GitHub fails, as the recruitment portal's pipeline does."
+  type        = bool
+  default     = false
+}
+
 variable "build_image" {
   description = "CodeBuild image. The other portals use aws/codebuild/standard:7.0."
   type        = string

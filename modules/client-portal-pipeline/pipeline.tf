@@ -3,6 +3,8 @@ resource "aws_codepipeline" "this" {
   role_arn      = aws_iam_role.pipeline.arn
   pipeline_type = "V2"
 
+  execution_mode = var.execution_mode
+
   artifact_store {
     type     = "S3"
     location = aws_s3_bucket.artifacts.bucket
@@ -26,6 +28,18 @@ resource "aws_codepipeline" "this" {
         BranchName           = var.branch
         OutputArtifactFormat = "CODE_ZIP"
         DetectChanges        = "true"
+      }
+    }
+
+    dynamic "on_failure" {
+      for_each = var.retry_source_on_failure ? [1] : []
+
+      content {
+        result = "RETRY"
+
+        retry_configuration {
+          retry_mode = "ALL_ACTIONS"
+        }
       }
     }
   }
