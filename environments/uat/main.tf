@@ -22,6 +22,11 @@ module "client_portal" {
   # Plain configuration. Not secret, so it lives here where changes are reviewed in git.
   # Each backend address must end with a slash (the portal's API client depends on it).
   environment_properties = {
+    # Recorded as "UAT" to match what was set by hand in the console (and what the other apps use). NOTE: the
+    # portal's session cookie is only marked secure when this is exactly "production" (sessions.server.ts), and
+    # Node libraries run in development mode for any other value. Revisit before Production, where it must be
+    # "production".
+    NODE_ENV                 = "UAT"
     PORTAL_ORIGIN            = "https://uat.client.prestigeinhomecare.com.au"
     AUTH_API_BASE_URI        = "https://uat.thehub.prestigeinhomecare.com.au/auth/"
     INTEGRATION_API_BASE_URI = "https://uat.thehub.prestigeinhomecare.com.au/integration/"

@@ -64,7 +64,7 @@ resource "aws_elastic_beanstalk_environment" "this" {
   setting {
     namespace = "aws:elasticbeanstalk:environment"
     name      = "ServiceRole"
-    value     = var.service_role
+    value     = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/${var.service_role}" # the full ARN, as Elastic Beanstalk reports it (a bare name shows as a permanent difference)
   }
 
   # Instances: dedicated role and firewall, no SSH key, IMDSv1 off.
