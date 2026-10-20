@@ -1,4 +1,4 @@
-# The traffic path of the Recruitment Portal UAT site, imported as it is (see imports.tf). A visitor to
+# The traffic path of the Recruitment Portal UAT site, imported as it is. A visitor to
 # https://uat.recruitment.prestigeinhomecare.com.au goes:
 #
 #   DNS (outside AWS) -> the certificate below -> the Hub 1.0 UAT load balancer's HTTPS listener

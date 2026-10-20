@@ -1,7 +1,7 @@
 # The CodeBuild project that BOTH Recruitment Portal pipelines (RecruitmentPortal-UAT and
 # RecruitmentPortal-PROD) use. That is why it lives in this "shared" stack and not in either environment's:
 # a change here affects Production builds as well as UAT ones. Each pipeline passes its own BUILD_ENV, and the
-# repo's buildspec.yml does the build. Imported from the console-made project (see imports.tf), then adjusted.
+# repo's buildspec.yml does the build. Imported from the console-made project, then adjusted.
 resource "aws_codebuild_project" "build" {
   name               = "RecruitmentPortalReact"
   project_visibility = "PRIVATE"

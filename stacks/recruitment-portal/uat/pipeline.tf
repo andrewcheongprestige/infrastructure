@@ -1,4 +1,4 @@
-# The existing Recruitment Portal UAT pipeline, imported as it is (see imports.tf). This is a faithful record
+# The existing Recruitment Portal UAT pipeline, imported as it is. This is a faithful record
 # of what runs today, not a redesign: do not "improve" it here without a plan that shows what changes.
 #
 # Source: GitHub branch uat, through the shared CodeConnections connection.
