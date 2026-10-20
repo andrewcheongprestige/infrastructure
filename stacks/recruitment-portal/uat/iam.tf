@@ -72,6 +72,16 @@ resource "aws_iam_policy" "pipeline_service" {
         Resource = ["arn:aws:s3:::elasticbeanstalk-ap-southeast-2-421089614203", "arn:aws:s3:::elasticbeanstalk-ap-southeast-2-421089614203/*", "arn:aws:s3:::elasticbeanstalk-env-resources-ap-southeast-2", "arn:aws:s3:::elasticbeanstalk-env-resources-ap-southeast-2/*"]
       },
       {
+        # Added after the import (the rest of this policy is as the console wizard wrote it). AWS's own regional
+        # bucket (no account number) holds each environment's compiled CloudFormation template, which the deploy
+        # reads with this role's permissions. Without it the deploy fails with "S3 error: Access Denied".
+        # Same statement as the client portal's pipeline role.
+        Sid      = "DeployRegionalTemplates"
+        Effect   = "Allow"
+        Action   = ["s3:GetObject", "s3:ListBucket"]
+        Resource = ["arn:aws:s3:::elasticbeanstalk-ap-southeast-2", "arn:aws:s3:::elasticbeanstalk-ap-southeast-2/environments/*"]
+      },
+      {
         Sid      = "S3ArtifactBucketAccess"
         Effect   = "Allow"
         Action   = ["s3:GetObject", "s3:GetObjectVersion", "s3:PutObject", "s3:PutObjectAcl", "s3:GetBucketLocation", "s3:ListBucket"]
