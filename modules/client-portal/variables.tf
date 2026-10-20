@@ -101,7 +101,7 @@ variable "environment_properties" {
   # Stops a placeholder from being deployed by accident.
   validation {
     condition     = alltrue([for v in values(var.environment_properties) : !strcontains(v, "REPLACE-ME")])
-    error_message = "An environment property still contains the placeholder REPLACE-ME. Put the real value in environments/<env>/main.tf."
+    error_message = "An environment property still contains the placeholder REPLACE-ME. Put the real value in stacks/client-portal/<env>/main.tf."
   }
 }
 

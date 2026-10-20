@@ -1,5 +1,5 @@
 module "client_portal_pipeline" {
-  source = "../../modules/client-portal-pipeline"
+  source = "../../../modules/client-portal-pipeline"
 
   name              = "ClientPortal-UAT"
   github_repository = "Prestige-Inhome-Care/client-portal"

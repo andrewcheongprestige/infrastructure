@@ -1,5 +1,5 @@
 module "client_portal" {
-  source = "../../modules/client-portal"
+  source = "../../../modules/client-portal"
 
   environment = "UAT"
   hostname    = "uat.client.prestigeinhomecare.com.au"
