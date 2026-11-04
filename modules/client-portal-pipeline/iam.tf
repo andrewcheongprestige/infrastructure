@@ -137,7 +137,9 @@ resource "aws_iam_role_policy" "pipeline" {
       {
         Sid      = "DeployRegionalTemplates"
         Effect   = "Allow"
-        Action   = ["s3:GetObject", "s3:ListBucket"]
+        # CloudFormation asks for the template by version ID, which needs s3:GetObjectVersion as well as s3:GetObject.
+        # Found with a CloudTrail data-event trail on 2026-11-04 (GetObject with a versionId was refused).
+        Action   = ["s3:GetObject", "s3:GetObjectVersion", "s3:ListBucket"]
         Resource = [local.eb_regional_bucket_arn, "${local.eb_regional_bucket_arn}/environments/*"]
       },
       {

@@ -1,0 +1,20 @@
+output "alb_dns_name" {
+  description = "Create a CNAME from client.prestigeinhomecare.com.au to this."
+  value       = module.client_portal.alb_dns_name
+}
+
+output "certificate_arn" {
+  value = module.client_portal.certificate_arn
+}
+
+output "ssm_parameter_path" {
+  value = module.client_portal.ssm_parameter_path
+}
+
+output "eb_application_name" {
+  value = module.client_portal.eb_application_name
+}
+
+output "eb_environment_name" {
+  value = module.client_portal.eb_environment_name
+}

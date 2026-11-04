@@ -21,6 +21,11 @@ resource "aws_elastic_beanstalk_application" "this" {
     max_count             = 25
     delete_source_from_s3 = false
   }
+
+  # Production's environment is deployed into this application, so deleting it would delete Production's versions.
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
 resource "aws_elastic_beanstalk_environment" "this" {
