@@ -10,7 +10,26 @@ resource "aws_codepipeline" "this" {
     location = aws_s3_bucket.artifacts.bucket
   }
 
-  # A push to the branch starts a run.
+  # With tag_patterns set (Production), only a pushed tag that matches one of them starts a run, which is what a GitHub
+  # release does. Without it, a push to the branch does.
+  dynamic "trigger" {
+    for_each = length(var.tag_patterns) > 0 ? [1] : []
+
+    content {
+      provider_type = "CodeStarSourceConnection"
+
+      git_configuration {
+        source_action_name = "Source"
+
+        push {
+          tags {
+            includes = var.tag_patterns
+          }
+        }
+      }
+    }
+  }
+
   stage {
     name = "Source"
 

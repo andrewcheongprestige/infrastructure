@@ -5,6 +5,9 @@ module "client_portal_pipeline" {
   github_repository = "Prestige-Inhome-Care/client-portal"
   branch            = "production"
 
+  # A GitHub release (a tag such as production-2026.11.06-1) starts a deploy, not a push to the branch.
+  tag_patterns = ["production-*"]
+
   # Existing connection to GitHub, shared with the other portals' pipelines.
   connection_arn = "arn:aws:codeconnections:ap-southeast-2:421089614203:connection/977bfeb1-6c7b-470c-ab55-b70939019ef1"
 

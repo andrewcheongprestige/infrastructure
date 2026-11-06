@@ -13,6 +13,12 @@ variable "branch" {
   type        = string
 }
 
+variable "tag_patterns" {
+  description = "Git tag patterns that start the pipeline when a matching tag is pushed (for example production-*), as with a GitHub release. When empty, a push to the branch starts it instead."
+  type        = list(string)
+  default     = []
+}
+
 variable "connection_arn" {
   description = "Existing CodeConnections connection to GitHub. It is reused, not created here."
   type        = string
