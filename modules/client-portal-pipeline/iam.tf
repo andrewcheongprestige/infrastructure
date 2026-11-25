@@ -174,6 +174,16 @@ resource "aws_iam_role_policy" "pipeline" {
         Resource = "*"
       },
       {
+        # After an update Elastic Beanstalk deletes the environment's old launch template versions. Found when a UAT
+        # deploy failed with "You do not have permission to perform the 'ec2:DeleteLaunchTemplateVersions' action".
+        # Not narrowed to this environment: the launch template has no tags to match on (a tag condition never
+        # matched) and its ARN uses a generated ID. The role can only delete versions, not templates.
+        Sid      = "DeployLaunchTemplates"
+        Effect   = "Allow"
+        Action   = ["ec2:DeleteLaunchTemplateVersions"]
+        Resource = "arn:aws:ec2:${local.region}:${local.account_id}:launch-template/*"
+      },
+      {
         # A deploy pauses this environment's Auto Scaling group while it swaps the version, then resumes it.
         # Limited to this environment's own group.
         Sid    = "DeployAutoScaling"
